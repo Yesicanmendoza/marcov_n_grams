@@ -63,32 +63,41 @@ def make_chains(text_string, N):
     
          
 
-    print(chains)
-    print()
+    
     return chains
 
 
 def make_text(chains, N):
     """Return text from chains."""
 
-    start_key = choice(list(chains.keys()))
+    flag = True
+    while flag:
+        start_key = choice(list(chains.keys()))
+        if str(start_key[0][0]).isupper():
+            flag = False
+    
+
+
     n = N
-    words = []
+    words = list(start_key)
+    new_key = start_key
     
-    while True:
-
-        words = words + list(start_key)        
-        word_nrd = choice(chains[start_key])
+    while words[-1].isalpha():
+               
+               
+        word_nrd = choice(chains[new_key])
         words.append(word_nrd)
-        new_key = tuple(words[-n:])
-        start_key = new_key
-        if chains.get(start_key) == None:
+        if words[-1].isalpha() == False:
             break
-    
-    
-   
+        
+        new_key = tuple(words[-n:])
 
-    # your code goes here
+        if chains.get(new_key) == None:
+            break  
+        
+        words[len(words):] = list(new_key)
+            
+
 
     return ' '.join(words)
 
